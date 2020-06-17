@@ -16,6 +16,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jasmine": "^3.5.0",
     "karma": "^5.1.0",
+    "karma-opera-launcher": "^1.0.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
@@ -28,6 +29,9 @@
     "autoprefixer": "^9.8.0",
     "bind-decorator": "^1.0.11",
     "gh-pages": "^3.0.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.3.1",
+    "karma-phantomjs-launcher": "^1.0.4",
     "webpack-px-to-rem": "^0.1.1"
   }
 }
