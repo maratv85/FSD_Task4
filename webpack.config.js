@@ -1,66 +1,78 @@
+const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Autoprefixer = require('autoprefixer');
 
 
 module.exports = (env, options) => {
-  const PATHS = {
-    src: path.join(__dirname, './src'),
-    dist: path.join(__dirname, './dist')
-  };
-
-  const PAGES_DIR = `${PATHS.src}/pages/`;
-
+ 
   const production = options.mode === 'production';
-  const publicDir = production ? 'https://maratv85.github.io/FSD_Task2/' : '/';
-  //const publicDir = '/';
+  const publicDir = production ? 'https://maratv85.github.io/FSD_Task4/' : '/';
+ 
 
   return {
-    entry: {
-      app: `${PATHS.src}/js`,
-    },
+    entry: './src/index.ts',
+
     devtool: production ? false : 'eval-sourcemap',
+
     devServer: {
-	  //contentBase: './',
+	    contentBase: path.join(__dirname, 'dist/'),
       overlay: {
         warnings: true,
         errors: true,
+        compress: true,
+        port: 3000,
+        hot: true,
       },
       watchOptions: {
         ignored: /node_modules/,
       },
     },
+
     output: {
-      filename: 'js/[name].[hash].js',
-      path: PATHS.dist,
+      filename: '[name].bundle.js',
+      path: path.resolve('./dist'),
       publicPath: publicDir,
     },
-    optimization: {
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
-            name: 'vendors',
-            test: /node_modules/,
-            chunks: 'all',
-            enforce: true,
-          },
-        },
-      },
+
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss']
     },
+
     module: {
       rules: [{
         test: /\.pug$/,
         loader: 'pug-loader',
-      }, {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: '/node_modules/',
+        options: {
+          pretty: true,
+        },
+      }, 
+      {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+        options: {
+          "baseUrl": "./node_modules/@types",
+          "typeRoots": ["./node_modules/@types"],
+          "types": [
+            "jasmine",
+            "jasmine-jquery",
+          ],
+          "useBabel": true,
+          "babelOptions": {
+            "babelrc": false,
+            "presets": [
+              ["@babel/preset-env", { "targets": "last 2 versions, ie 11", "modules": false }],
+            ]
+          },
+          "babelCore": "@babel/core",
+        },
+        exclude: [/node_modules\/(?!(@types)\/).*/]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        exclude: [/blocks/, /img/, /static/],
+        exclude: [/blocks/],
         use: {
           loader: 'file-loader',
           options: {
@@ -70,21 +82,12 @@ module.exports = (env, options) => {
         },
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        exclude: [/fonts/, /static/],
-        options: {
-          name: './img/[name].[ext]',
-          publicPath: '../',
-        },
-      },
-      {
         test: /\.(svg|png|ico|xml|json)$/,
-        exclude: [/fonts/, /blocks/, /img/, /node_modules/],
+        exclude: [/blocks/, /node_modules/],
         use: [{
           loader: 'file-loader',
           options: {
-            name: './favicons/[name].[ext]',
+            name: './favicon/[name].[ext]',
             publicPath: '../',
           },
         }],
@@ -102,21 +105,14 @@ module.exports = (env, options) => {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              data: '@import \'./src/styles/common\';',
+              data: '@import \'./src/style/common\';',
               includePaths: [path.join(__dirname, 'src')],
             },
           },
-		  //{
-         //   loader: 'postcss-loader',
-          //  options: { 
-		 //     sourceMap: true, 
-		//	  config: { path: './postcss.config.js' } 
-		 //   }
-         // },
           {
             loader: 'webpack-px-to-rem',
             query: {
-              basePx: 14,
+              basePx: 16,
               min: 1,
               floatWidth: 3,
             },
@@ -129,6 +125,12 @@ module.exports = (env, options) => {
     plugins: [
       Autoprefixer,
 
+      // new webpack.DefinePlugin({
+      //   'process.env': {
+      //     NODE_ENV: JSON.stringify(nodeEnv),
+      //   },
+      // }),
+
       new MiniCssExtractPlugin({
         filename: './css/[name].[hash].css',
       }),
@@ -140,46 +142,22 @@ module.exports = (env, options) => {
       }),
 
       new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/index.pug`,
+        template: './page/index.pug',
         filename: './index.html',
       }),
 
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/uikit/colors-and-types/colors-and-types.pug`,
-        filename: './pages/colors-and-types.html',
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          tslint: {
+            emitErrors: true,
+            failOnHint: true,
+          },
+        },
       }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/uikit/cards/cards.pug`,
-        filename: './pages/cards.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/uikit/form-elements/form-elements.pug`,
-        filename: './pages/form-elements.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/uikit/headers-and-footers/headers-and-footers.pug`,
-        filename: './pages/headers-and-footers.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/website/landing-page/landing-page.pug`,
-        filename: './pages/landing-page.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/website/registration/registration.pug`,
-        filename: './pages/registration.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/website/room-details/room-details.pug`,
-        filename: './pages/room-details.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/website/search-room/search-room.pug`,
-        filename: './pages/search-room.html',
-      }),
-      new HtmlWebpackPlugin({
-        template: `${PAGES_DIR}/website/sign-in/sign-in.pug`,
-        filename: './pages/sign-in.html',
-      }),
+
+      new CopyWebpackPlugin([
+        { from: '../node_modules/jquery/dist/jquery.js', to: './lib/jquery.js' },
+      ]),
 
     ],
   };
