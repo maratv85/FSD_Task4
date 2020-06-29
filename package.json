@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "dev": "npm run server:dev",
+    "build": "npm run build:production",
     "deploy": "gh-pages -d dist",
     "test": "karma start",
-    "eslint-fix": "eslint --fix  \"./\"  --ext .ts,.js",
     "eslint": "esw -w --ext .ts,.js",
-    "tslint": "tslint --project tsconfig.json",
-    "build": "webpack --mode production",
-    "server": "webpack-dev-server --mode development --config ./webpack.config.js --hot --inline --progress --watch --open"
+    "eslint-fix": "eslint --fix  \"./\"  --ext .ts,.js",
+    "build:prod": "cross-env NODE_ENV=production webpack --mode production --config ./webpack.config.js  --progress  --color --display-error-details --bail",
+    "server:dev": "webpack-dev-server --mode development --config ./webpack.config.js --hot --inline --progress --watch --open"
   },
   "author": "Marat Valiev",
   "license": "ISC",
