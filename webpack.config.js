@@ -100,14 +100,16 @@ const config = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              includePaths: [path.join(__dirname, 'src')],
+              sassOptions: {
+                includePaths: [path.join(__dirname, 'src')],
+              }
             },
           },
         ],
       },
       {
         test: /\.(svg|png|ico|xml|json)$/,
-        exclude: [/node_modules/],
+        exclude: [/node_modules/, /fonts/],
         use: [{
           loader: 'file-loader',
           options: {
@@ -115,6 +117,17 @@ const config = {
             outputPath: 'favicons/',
           },
         }],
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        exclude: [/node_modules/, /favicon/],
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+          },
+        },
       },
       {
         loader: 'webpack-px-to-rem',
