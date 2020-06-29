@@ -20,13 +20,17 @@ html(lang='en')
     meta(name="theme-color" content="#ffffff")
   body
     block content
-      include /blocks/block/block.pug
+      include /blocks/slider-container/slider-container.pug
       
       main.sliders
-        .sliders__element
-          +block({ 
-            //- some options
-          })
+        .sliders__container
+          .sliders__header 
+            span.sliders__text-left Range 
+            span.sliders__text-right Slider
+          //- .sliders__element
+          //-   +slider-container({ 
+          //-     //- some options
+          //-   })
         
     
     
