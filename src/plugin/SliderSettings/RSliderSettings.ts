@@ -1,4 +1,4 @@
-export interface RSliderSettings {
+export interface IRSliderSettings {
   step?: number;
   isVertical?: boolean;
   isRange?: boolean;
