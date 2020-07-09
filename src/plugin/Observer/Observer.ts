@@ -21,4 +21,5 @@ class Observer {
     this.observers.forEach((subscriber) => subscriber(data));
   }
 }
-export default Obdserver;
+
+export default Observer;
