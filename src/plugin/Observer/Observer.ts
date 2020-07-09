@@ -1,16 +1,24 @@
 class Observer {
-  private observers: string[];
+  private observers: Function[];
 
   constructor() {
-	this.observers = [];  	
+	  this.observers = [];  	
   }
   
-  subscribe() {
-  
+  public getSubscribers(): Function[] {
+    return this.observers;
+  }
+
+  public subscribe(fn: Function): void {
+    this.observers.push(fn);
   }
   
-  unsubscribe() {
-  
+  public unsubscribe(fn: Function): void {
+    this.observers = this.observers.filter((subscriber) => subscriber !== fn);
+  }
+
+  public broadcast(data: object): void {
+    this.observers.forEach((subscriber) => subscriber(data));
   }
 }
 export default Obdserver;
