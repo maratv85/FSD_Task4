@@ -17,7 +17,7 @@ class Observer {
     this.observers = this.observers.filter((subscriber) => subscriber !== fn);
   }
 
-  public broadcast(data: object): void {
+  public notify(data: object): void {
     this.observers.forEach((subscriber) => subscriber(data));
   }
 }
