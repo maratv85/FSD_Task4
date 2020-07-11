@@ -13,3 +13,5 @@ const RSliderSettingsDefault: IRSliderSettings = {
 }
 
 export default RSliderSettingsDefault
+
+export {RSliderSettingsDefault}
