@@ -1,9 +1,9 @@
 import { IRSliderSettings } from './SliderSettings/RSliderSettings'
 
 declare global {
-  interface Window {
-    $: JQuery;
-  }
+  // interface Window {
+  //   $: JQuery;
+  // }
   interface JQuery {
     RSlider: (
       options?: IRSliderSettings,
