@@ -9,7 +9,7 @@ class Model {
 
   constructor(settings?: IRSliderSettings) {
     this.settings = { ...settings };
-    this.initModel(settings);
+    //this.initModel(settings);
   }
 
   public updateSettings(settings: IRSliderSettings): void {
@@ -17,4 +17,4 @@ class Model {
   }
 }
 
-export default Model;
+export { Model };

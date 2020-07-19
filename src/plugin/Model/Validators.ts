@@ -14,7 +14,7 @@ class Validators {
     value: IRSliderSettings[keyof IRSliderSettings],
     settings: IRSliderSettings = {},
     curSettings: IRSliderSettings
-  ) {
+  ): void {
     const validateStep = this.isValidNumber(settings.step);
     const validateFrom = this.isValidNumber(settings.from);
     const validateTo = this.isValidNumber(settings.to);
@@ -71,7 +71,5 @@ class Validators {
   }
   
 }
-
-export default Validators;
 
 export { Validators };
