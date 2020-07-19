@@ -1,5 +1,6 @@
 // Karma configuration
 // Generated on Tue Jun 16 2020 19:08:36 GMT+0300 (GMT+03:00)
+const webpackConfig = require('./webpack.config');
 
 module.exports = function(config) {
   config.set({
@@ -9,19 +10,20 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/jquery/dist/jquery.js',
-      'src/plugin/**/*.ts',
-      'src/test/**/*.spec.ts'
+      'test/index.ts'
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/plugin/**/*.ts': ['karma-typescript', 'sourcemap', 'coverage'],
-      'src/test/**/*.ts': ['karma-typescript',  'sourcemap'],
-      'karma.conf.js': ['karma-typescript',  'sourcemap']
+      'tests/index.ts': ["webpack"],
     },
 
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      noInfo: true
+    },
+    
     karmaTypescriptConfig: {
       compilerOptions: {
         noImplicitAny: true,
