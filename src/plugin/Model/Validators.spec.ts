@@ -3,36 +3,93 @@ import { IRSliderSettings } from '../SliderSettings/RSliderSettings'
 
 describe('Validators test', () => {
   const sett: IRSliderSettings = {};
-  const currSett: IRSliderSettings = {
-    step: 5,
-    min: 10,
-    max: 100,
-    from: 30,
-    to: 70,
-    isRange: true
-  }
+  let currSett: IRSliderSettings;
 
-  it('Validators. Should validate step', () => {
+  beforeEach(() => {
+    currSett = {
+      step: 5,
+      min: 10,
+      max: 100,
+      from: 30,
+      to: 70,
+      isRange: true,
+      hasTip: true,
+      hasScale: true,
+      isVertical: false,
+    }
+  })
+
+  it('Validators. Should validate "step"', () => {
     expect(Validators.validateSettings('step', 5, sett, currSett)).toEqual(5);
   });
 
-  it('Validators. Should validate min', () => {
+  it('Validators. Should validate "min"', () => {
     expect(Validators.validateSettings('min', 10, sett, currSett)).toEqual(10);
   });
 
-  it('Validators. Should validate max', () => {
+  it('Validators. Should validate "max"', () => {
     expect(Validators.validateSettings('max', 100, sett, currSett)).toEqual(100);
   });
 
-  it('Validators. Should validate from', () => {
+  it('Validators. Should validate "from"', () => {
     expect(Validators.validateSettings('from', 30, sett, currSett)).toEqual(30);
   });
 
-  it('Validators. Should validate to', () => {
+  it('Validators. Should validate "to"', () => {
     expect(Validators.validateSettings('to', 70, sett, currSett)).toEqual(70);
   });
 
-  it('Validators. Should validate range', () => {
-    expect(Validators.validateSettings('range', true, sett, currSett)).toEqual(null);
+  it('Validators. Should validate "range"', () => {
+    expect(Validators.validateSettings('isRange', true, sett, currSett)).toBeTrue();
+  });
+
+  it('Validators. Should validate "vertical"', () => {
+    expect(Validators.validateSettings('isVertical', true, sett, currSett)).toBeTrue();
+  });
+
+  it('Validators. Should validate "has tip"', () => {
+    expect(Validators.validateSettings('hasTip', true, sett, currSett)).toBeTrue();
+  });
+
+  it('Validators. Should validate "has scale"', () => {
+    expect(Validators.validateSettings('hasScale', true, sett, currSett)).toBeTrue();
+  });
+
+  it('Validators. Should validate default value', () => {
+    expect(Validators.validateSettings('default', false, sett, currSett)).toEqual(null);
+  });
+})
+
+describe('Validators test', () => {
+  const sett: IRSliderSettings = {};
+  let currSett: IRSliderSettings;
+
+  beforeEach(() => {
+    currSett = {
+      step: 5,
+      min: 10,
+      max: 100,
+      from: 1,
+      to: 70,
+      isRange: true,
+    }
+  })
+
+  it('Validators. Check if invalid "from" value', () => {
+    expect(Validators.validateSettings('from', 1, sett, currSett)).toEqual(10);
+  });
+
+  beforeEach(() => {
+    currSett = {
+      step: 5,
+      min: 10,
+      max: 100,
+      from: 1,
+      to: 70,
+    }
+  })
+
+  it('Validators. Check if invalid "to" value', () => {
+    expect(Validators.validateSettings('to', 1, sett, currSett)).toEqual(10);
   });
 })
