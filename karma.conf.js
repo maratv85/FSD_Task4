@@ -10,13 +10,13 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/index.ts'
+      { pattern: './tests/index.js', watched: false }
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'tests/index.ts': ["webpack"],
+      'tests/index.js': ["webpack"],
     },
 
     webpack: webpackConfig,
@@ -50,7 +50,7 @@ module.exports = function(config) {
 
     coverageIstanbulReporter: {
       reports: ['html', 'text-summary'],
-      dir: './test/coverage', 
+      dir: './coverage', 
       fixWebpackSourcePaths: true,
       query: {
         esModules: true

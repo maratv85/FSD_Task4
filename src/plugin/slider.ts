@@ -11,15 +11,15 @@ declare global {
   }
 }
 
-(function($: JQueryStatic) {
+// (function($: JQueryStatic) {
 
-  $.fn.RSlider = function startSlider(options: any) {
+//   $.fn.RSlider = function startSlider(options: any) {
 
-    return this.map(function () { 
-      const data: IRSliderSettings = $().data();
+//     return this.map(function () { 
+//       const data: IRSliderSettings = $().data();
       
-    });
+//     });
 
-  };
+//   };
 
-})(jQuery);
+// })(jQuery);

@@ -29,7 +29,7 @@ const plugins = [
   }),
 
   new HtmlWebpackPlugin({
-    template: './page/index.pug',
+    template: './demo-page/index.pug',
     filename: 'index.html',
   }),
 
