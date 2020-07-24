@@ -44,15 +44,15 @@ class Validators {
       
       case 'step':
         if (isInvalidStep) { return curSettings.step }
-        else { return step }
+        return step
 
       case 'max':
         if (isInvalidMax) { return curSettings.max }
-        else { return max }
+        return max 
       
       case 'min':
         if (isInvalidMin) { return curSettings.min }
-        else { return min }
+        return min
         
       case 'from':
         if (isRange && isInvalidFrom) { return to - step > min ? to - step : min;}
