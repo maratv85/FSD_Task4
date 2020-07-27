@@ -35,39 +35,48 @@ class Validators {
     const isInvalidMax = max <= min + step;
     const isInvalidMin = min >= max - step;
 
-    switch (key) {
-      case 'isVertical':
-      case 'hasTip':
-      case 'hasScale':
-      case 'isRange':
-        return this.isValidBoolean(value);
-      
-      case 'step':
-        if (isInvalidStep) { return curSettings.step }
-        return step
+    if (key === 'isVertical') return this.isValidBoolean(value);
+    
+    if (key === 'hasTip') return this.isValidBoolean(value);
+    
+    if (key === 'hasScale') return this.isValidBoolean(value);
 
-      case 'max':
-        if (isInvalidMax) { return curSettings.max }
-        return max 
-      
-      case 'min':
-        if (isInvalidMin) { return curSettings.min }
-        return min
-        
-      case 'from':
-        if (isRange && isInvalidFrom) { return to - step > min ? to - step : min;}
-        if (from > max) return max;
-        if (from < min) return min;
-        return from;
-        
-      case 'to':
-        if (isInvalidTo) { return from + step > max ? from + step : max; }
+    if (key === 'isRange') return this.isValidBoolean(value);
+
+    if (key === 'step') {
+      if (isInvalidStep) { return curSettings.step }
+      return step;
+    }
+    
+    if (key === 'max') {
+      if (isInvalidMax) { return curSettings.max }
+      return max 
+    }
+
+    if (key === 'min') {
+      if (isInvalidMin) { return curSettings.min }
+      return min 
+    }
+
+    if (key === 'from') {
+      if (isRange && isInvalidFrom) { return to - step > min ? to - step : min;}
+      if (from > max) return max;
+      if (from < min) return min;
+      return from;
+    }
+
+    if (key === 'to') {
+      if (isInvalidTo) { return from + step > max ? from + step : max; }
         if (to > max) return max;
         if (to < min) return min;
         return to
-        
-      default: return null;
     }
+
+    // const keys = Object.keys(settings);
+    // let wrongKey: String[];
+    // wrongKey = Object.keys(settings).filter(str => str.indexOf(key) !== 0)
+
+    // if (wrongKey.length === 0) return null;
   }
   
 }
