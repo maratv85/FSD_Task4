@@ -12,8 +12,9 @@ class Model {
     this.initModel(settings);
   }
 
-  public initModel(settings: IRSliderSettings = {}) {
+  public initModel(settings: IRSliderSettings = {}): void {
     this.setSettings(settings);
+    this.dispatchSettings();
   }
 
   public getSettings(): IRSliderSettings {
@@ -51,21 +52,26 @@ class Model {
   }
 
   private dispatchSettings(): void {
-    const {
-      isRange, isVertical, hasTip, hasScale,
-    } = this.getSettings();
-    this.observableSettings.notify({
-      isRange, isVertical, hasTip, hasScale,
-    });
+    const { isRange, isVertical, hasTip, hasScale } = this.getSettings();
+    this.observableSettings.notify({isRange, isVertical, hasTip, hasScale});
     this.dispatchValues();
   }
 
   private dispatchValues(): void {
     const { from, to } = this.getSettings();
-    
-    this.observableValues.notify({
-      
-    });
+    const fromPercent: number = this.convertValueToPercent(from);
+    const toPercent: number = this.convertValueToPercent(to)
+    this.observableValues.notify({to, from, fromPercent, toPercent});
+  }
+
+  public convertValueToPercent(posValue: number): number {
+    const { min, max } = this.getSettings();
+    return ((posValue - min) * 100) / (max - min);
+  }
+
+  public convertPercentToValue(posPercent: number): number {
+    const { min, max } = this.getSettings();
+    return ((max - min) * posPercent) / 100 + min;
   }
 
   private isValidBoolean(value: IRSliderSettings[keyof IRSliderSettings]): boolean | null {
@@ -76,7 +82,7 @@ class Model {
     return typeof value === 'number' ? value : null;
   }
 
-  public validateSetting(
+  private validateSetting(
     key: string,
     value: IRSliderSettings[keyof IRSliderSettings],
     settings: IRSliderSettings = {}
