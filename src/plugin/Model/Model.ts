@@ -8,13 +8,27 @@ class Model {
   public observableSettings: Observer = new Observer();
 
   constructor(settings?: IRSliderSettings) {
-    this.settings = { ...settings };
+    this.settings = { ...RSliderSettingsDefault };
     this.initModel(settings);
   }
 
   public initModel(settings: IRSliderSettings = {}): void {
     this.setSettings(settings);
     this.dispatchSettings();
+  }
+
+  public updateValue(posPercent: number, setValue: string): void {
+    const newValue: number = this.convertPercentToValue(posPercent);
+    const settings = this.getSettings();
+    const isSettingsModified = Object.entries(settings).find(
+      ([key, value]) => value !== this.getSettings()[key]);
+    if (setValue = 'fromValue') {
+      this.setSettings({ from: newValue });
+    }
+    if (setValue = 'toValue') {
+      this.setSettings({ to: newValue });
+    }
+    if (isSettingsModified) this.dispatchValues();
   }
 
   public getSettings(): IRSliderSettings {
@@ -51,6 +65,16 @@ class Model {
     });
   }
 
+  public convertValueToPercent(posValue: number): number {
+    const { min, max } = this.getSettings();
+    return ((posValue - min) * 100) / (max - min);
+  }
+
+  public convertPercentToValue(posPercent: number): number {
+    const { min, max } = this.getSettings();
+    return ((max - min) * posPercent) / 100 + min;
+  }
+
   private dispatchSettings(): void {
     const { isRange, isVertical, hasTip, hasScale } = this.getSettings();
     this.observableSettings.notify({isRange, isVertical, hasTip, hasScale});
@@ -62,16 +86,6 @@ class Model {
     const fromPercent: number = this.convertValueToPercent(from);
     const toPercent: number = this.convertValueToPercent(to)
     this.observableValues.notify({to, from, fromPercent, toPercent});
-  }
-
-  public convertValueToPercent(posValue: number): number {
-    const { min, max } = this.getSettings();
-    return ((posValue - min) * 100) / (max - min);
-  }
-
-  public convertPercentToValue(posPercent: number): number {
-    const { min, max } = this.getSettings();
-    return ((max - min) * posPercent) / 100 + min;
   }
 
   private isValidBoolean(value: IRSliderSettings[keyof IRSliderSettings]): boolean | null {
