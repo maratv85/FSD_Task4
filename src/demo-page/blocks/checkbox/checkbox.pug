@@ -1,0 +1,6 @@
+mixin checkbox({name = 'checkbox-button', text = 'some description of the input'})
+  .checkbox
+    label(class='checkbox__label')
+      input(type='checkbox' name=name class='checkbox__input')
+      span.checkbox__checkbox
+      span.checkbox__header=text
