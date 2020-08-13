@@ -1,4 +1,4 @@
-//import './demo-page/index';
+import './demo-page/style/common.scss';
 
 function importAll(resolve: any) {
   resolve.keys().forEach(resolve);

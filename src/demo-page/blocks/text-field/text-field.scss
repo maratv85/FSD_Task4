@@ -8,19 +8,19 @@
   font-family: Arial, Helvetica, sans-serif;
   background: #FFFFFF;
   font-size: 14px;
-  color: $dark-shade-25;
-  border: 1px solid $dark-shade-25;
+  color: rgba(31, 32, 65, 0.50);
+  border: 1px solid rgba(31, 32, 65, 0.50);
   box-sizing: border-box;
   padding-left: 15px;
   text-overflow: ellipsis;
 
   &:hover,&:focus {
-    border: 1px solid $dark-shade-50;
-    color: $dark-shade-75;
+    border: 1px solid rgba(31, 32, 65, 0.75);
+    color: rgba(31, 32, 65, 0.75);
     outline: none;
   }
 
   &::placeholder {
-    color: $dark-shade-25;
+    color: rgba(31, 32, 65, 0.50);
   }
 }

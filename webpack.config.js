@@ -48,7 +48,6 @@ const plugins = [
 
 ];
 
-
 const config = {
   devtool: isProduction ? 'hidden-source-map' : 'source-map',
   context: path.resolve('./src'),
@@ -119,13 +118,14 @@ const config = {
         }],
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
         exclude: [/node_modules/, /favicon/],
         use: {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
             outputPath: 'fonts/',
+            //publicPath: '../'
           },
         },
       },
@@ -151,6 +151,13 @@ const config = {
     port: 3000,
     hot: true,
   },
+//   devServer: {
+//     contentBase: [path.resolve(__dirname, "build"), path.resolve(__dirname, "assets")],
+//     compress: true,
+//     port: 4200,
+//     historyApiFallback: true,
+//     noInfo:true
+// }  
 };
 
     module.exports = config;
