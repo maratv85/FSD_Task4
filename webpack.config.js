@@ -150,14 +150,7 @@ const config = {
     compress: true,
     port: 3000,
     hot: true,
-  },
-//   devServer: {
-//     contentBase: [path.resolve(__dirname, "build"), path.resolve(__dirname, "assets")],
-//     compress: true,
-//     port: 4200,
-//     historyApiFallback: true,
-//     noInfo:true
-// }  
+  }, 
 };
 
     module.exports = config;
