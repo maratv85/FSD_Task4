@@ -1,4 +1,5 @@
 import './demo-page/style/common.scss';
+import './demo-page/style/fonts.scss';
 
 function importAll(resolve: any) {
   resolve.keys().forEach(resolve);

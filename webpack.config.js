@@ -42,9 +42,11 @@ const plugins = [
     },
   }),
 
-  // new CopyWebpackPlugin([
-  //   { from: '../node_modules/jquery/dist/jquery.js', to: './lib/jquery.js' },
-  // ]),
+  new CopyWebpackPlugin({
+    patterns: [ 
+      { from: '../node_modules/jquery/dist/jquery.js', to: './lib/jquery.js' },
+    ],
+  }),
 
 ];
 
@@ -107,37 +109,45 @@ const config = {
         ],
       },
       {
-        test: /\.(svg|png|ico|xml|json)$/,
-        exclude: [/node_modules/, /fonts/],
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'favicons/',
-          },
-        }],
-      },
-      {
-        test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
-        exclude: [/node_modules/, /favicon/],
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/',
-            //publicPath: '../'
-          },
-        },
-      },
-      {
         loader: 'webpack-px-to-rem',
         query: {
-          // 1rem=npx default 10
           basePx: 16,
           min: 1,
           floatWidth: 3,
         },
       },
+      {
+        test: /\.(svg)$/,
+        exclude: [/node_modules/, /fonts/, /favicon/],
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'img/'
+          },
+        }],
+      },
+
+      {
+        test: /\.(png|svg|ico|xml|webmanifest)?$/,
+        exclude: [/node_modules/, /fonts/, /blocks/],
+        loader: 'file-loader',
+        options: {     
+          name: '[name].[ext]',
+          outputPath: 'favicon/',
+        },
+      },    
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        exclude: [/node_modules/, /favicon/, /blocks/],
+        use: 'url-loader?limit=100000&mimetype=application/octet-stream',
+      },
+      {
+        test: /\.(eot|woff|woff2|svg)([\?]?.*)$/,
+        exclude: [/node_modules/, /favicon/, /blocks/],
+        use: 'url-loader?limit=600000&mimetype=application/octet-stream',
+      },
+      
     ].filter(Boolean),
   },
 
